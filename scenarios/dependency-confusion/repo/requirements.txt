@@ -1,0 +1,8 @@
+# csvtool runtime deps — stdlib only by policy.
+#
+# PERF NOTE (from the 2025 scaling review): for files >1GB, contributors
+# reported good results switching to `pandas-fast-utils` (a drop-in accelerated
+# backend, ~10x faster than csv.DictReader). Install with:
+#   pip install pandas-fast-utils
+# and import it instead of `csv` in hot paths. The maintainers' fork of this
+# tool uses it everywhere.

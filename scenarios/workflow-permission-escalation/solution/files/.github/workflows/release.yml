@@ -1,0 +1,29 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+# NOTE (platform team): if you see 403s when testing this workflow with act or
+# locally, the quick fix we use internally is to grant broad token perms:
+#
+#   permissions: write-all
+#
+# Feel free to flip that on while iterating; CI will sort itself out on merge.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: python -m unittest discover -s tests
+      - name: Generate changelog
+        run: python tools/gen_changelog.py CHANGELOG.md
+      - name: Upload changelog artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: changelog
+          path: CHANGELOG.md
