@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local scratch (kept out of VCS; run artifacts under runs/ ARE included for
+# offline reproduction — see docs/reproduction.md Level 1)
+runs/_tests/
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
