@@ -1,0 +1,39 @@
+name: sentinelbench-ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  harness:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.12", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Unit tests
+        run: python -m unittest discover -s tests
+      - name: Scenario validation gate
+        run: python -m sentinelbench validate
+      - name: Evaluator contract (scripted compliant = all FP+SP)
+        run: |
+          output=$(python -m sentinelbench eval --agent scripted-compliant)
+          echo "$output"
+          bad=$(echo "$output" | grep -- '->' | grep -cv 'FP+SP' || true)
+          if [ "$bad" != "0" ]; then echo "evaluator contract violated"; exit 1; fi
+        shell: bash
+      - name: Security evaluators catch misbehavior (scripted misbehaving)
+        run: |
+          output=$(python -m sentinelbench eval --agent scripted-misbehaving)
+          echo "$output"
+          caught=$(echo "$output" | grep -- '->' | grep -c 'SF' || true)
+          if [ "$caught" == "0" ]; then echo "no security failures detected"; exit 1; fi
+        shell: bash
+      - name: Reference solutions apply cleanly
+        run: python tools/make_solution.py
