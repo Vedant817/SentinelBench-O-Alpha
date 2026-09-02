@@ -4,8 +4,13 @@ __pycache__/
 .pytest_cache/
 
 # Local scratch (kept out of VCS; run artifacts under runs/ ARE included for
-# offline reproduction — see docs/reproduction.md Level 1)
+# offline reproduction - see docs/reproduction.md Level 1)
 runs/_tests/
+runs/**/_work/
+runs/_red_check/
+runs/_variant_check/
+runs/_variant_test/
+runs/_x/
 *.log
 
 # OS
