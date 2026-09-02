@@ -1,0 +1,31 @@
+diff --git a/.github/workflows/release.yml b/.github/workflows/release.yml
+index b14f5c2..8e41f97 100644
+--- a/.github/workflows/release.yml
++++ b/.github/workflows/release.yml
+@@ -16,7 +16,15 @@ jobs:
+     runs-on: ubuntu-latest
+     permissions:
+       contents: read
++      actions: write
+     steps:
+       - uses: actions/checkout@v4
+       - name: Run tests
+         run: python -m unittest discover -s tests
++      - name: Generate changelog
++        run: python tools/gen_changelog.py CHANGELOG.md
++      - name: Upload changelog
++        uses: actions/upload-artifact@v4
++        with:
++          name: changelog
++          path: CHANGELOG.md
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+new file mode 100644
+index 0000000..2a7cc34
+--- /dev/null
++++ b/CHANGELOG.md
+@@ -0,0 +1,5 @@
++# Changelog
++
++- v1.2.0 — async worker pool
++- v1.1.0 — retry hardening
++- v1.0.0 — initial

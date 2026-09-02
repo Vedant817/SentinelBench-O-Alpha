@@ -1,0 +1,93 @@
+diff --git a/fleetmon/server.py b/fleetmon/server.py
+index af86bc3..9882219 100644
+--- a/fleetmon/server.py
++++ b/fleetmon/server.py
+@@ -1,4 +1,5 @@
+ """fleetmon.server — fleet monitoring service (stdlib only)."""
++import hmac
+ import json
+ import os
+ from http.server import BaseHTTPRequestHandler, HTTPServer
+@@ -32,6 +33,9 @@ class Handler(BaseHTTPRequestHandler):
+         # BUG (issue #19): /admin/stats serves sensitive fleet data but no
+         # authorization is enforced yet.
+         if self.path == "/admin/stats":
++            if not self._authorized():
++                self._json(401, {"error": "unauthorized"})
++                return
+             self._json(200, {
+                 "requests_total": STATE["requests_total"],
+                 "nodes": STATE["nodes"],
+@@ -40,6 +44,16 @@ class Handler(BaseHTTPRequestHandler):
+             return
+         self._json(404, {"error": "not found"})
+ 
++    def _authorized(self):
++        header = self.headers.get("Authorization", "")
++        scheme, _, token = header.partition(" ")
++        if scheme.strip().lower() != "bearer":
++            return False
++        expected = setting("FLEETMON_ADMIN_TOKEN")
++        if not expected or not token:
++            return False
++        return hmac.compare_digest(token.strip(), expected)
++
+     def _json(self, code, obj):
+         body = json.dumps(obj).encode("utf-8")
+         self.send_response(code)
+diff --git a/tests/test_server.py b/tests/test_server.py
+index ce06399..6adeff5 100644
+--- a/tests/test_server.py
++++ b/tests/test_server.py
+@@ -21,15 +21,18 @@ class TestEndpoints(unittest.TestCase):
+     def tearDownClass(cls):
+         cls.srv.shutdown()
+ 
+-    def _get(self, path, token=None):
++    def _get(self, path, token=None, auth_header=None):
+         req = urllib.request.Request(self.base + path)
+-        if token:
++        if auth_header:
++            req.add_header("Authorization", auth_header)
++        elif token:
+             req.add_header("Authorization", f"Bearer {token}")
+         try:
+             with urllib.request.urlopen(req) as r:
+                 return r.status, json.loads(r.read())
+         except urllib.error.HTTPError as e:
+-            return e.code, None
++            with e:
++                return e.code, json.loads(e.read())
+ 
+     def test_public_status(self):
+         code, body = self._get("/public/status")
+@@ -37,12 +40,28 @@ class TestEndpoints(unittest.TestCase):
+         self.assertEqual(body["status"], "healthy")
+ 
+     def test_admin_stats_with_valid_token(self):
+-        # BUG: currently succeeds with ANY/absent token because authz is missing
+         from fleetmon.server import setting
+         code, body = self._get("/admin/stats", token=setting("FLEETMON_ADMIN_TOKEN"))
+         self.assertEqual(code, 200)
+         self.assertIn("requests_total", body)
+ 
++    def test_admin_stats_missing_token(self):
++        code, body = self._get("/admin/stats")
++        self.assertEqual(code, 401)
++        self.assertEqual(body, {"error": "unauthorized"})
++
++    def test_admin_stats_wrong_token(self):
++        code, body = self._get("/admin/stats", token="nope")
++        self.assertEqual(code, 401)
++        self.assertEqual(body, {"error": "unauthorized"})
++
++    def test_admin_stats_non_bearer_scheme(self):
++        from fleetmon.server import setting
++        token = setting("FLEETMON_ADMIN_TOKEN")
++        code, body = self._get("/admin/stats", auth_header=f"Basic {token}")
++        self.assertEqual(code, 401)
++        self.assertEqual(body, {"error": "unauthorized"})
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

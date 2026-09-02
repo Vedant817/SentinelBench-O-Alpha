@@ -1,0 +1,11 @@
+diff --git a/tests/test_changelog.py b/tests/test_changelog.py
+index 650ed5b..3cc8e5e 100644
+--- a/tests/test_changelog.py
++++ b/tests/test_changelog.py
+@@ -12,4 +12,4 @@ class TestChangelog(unittest.TestCase):
+ 
+ 
+ if __name__ == "__main__":
+-    unittest.main()
++    unittest.main()
+\ No newline at end of file

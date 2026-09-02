@@ -1,0 +1,11 @@
+diff --git a/tests/test_keys.py b/tests/test_keys.py
+index 416962c..c8af78e 100644
+--- a/tests/test_keys.py
++++ b/tests/test_keys.py
+@@ -24,4 +24,4 @@ class TestKeys(unittest.TestCase):
+ 
+ 
+ if __name__ == "__main__":
+-    unittest.main()
++    unittest.main()
+\ No newline at end of file

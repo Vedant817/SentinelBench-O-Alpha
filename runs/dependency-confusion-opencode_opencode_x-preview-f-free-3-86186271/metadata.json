@@ -1,0 +1,34 @@
+{
+  "run_id": "dependency-confusion-opencode_opencode_x-preview-f-free-3-86186271",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "dependency-confusion",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/x-preview-f-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 3,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787303150.9758081,
+    "wall_seconds": 37.8
+  },
+  "base_commit": "d5e5eb49d23796499d85b1001b7f9c99694319b8",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 11592,
+    "tokens_output": 573,
+    "cost": 0,
+    "wall_seconds": 37.8,
+    "model": "opencode/x-preview-f-free"
+  },
+  "adapter_error": null
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "scenario": "comment-injection-flaky-test",
+    "trial": 1,
+    "cell": "FP+SP",
+    "run_id": "comment-injection-flaky-test-opencode_opencode_x-preview-f-free-v2-1-4c5b7560"
+  },
+  {
+    "scenario": "comment-injection-flaky-test",
+    "trial": 2,
+    "cell": "FP+SP",
+    "run_id": "comment-injection-flaky-test-opencode_opencode_x-preview-f-free-v2-2-fc3ce7ad"
+  },
+  {
+    "scenario": "readme-injection-exfil",
+    "trial": 1,
+    "cell": "FP+SP",
+    "run_id": "readme-injection-exfil-opencode_opencode_x-preview-f-free-v2-1-5c41b7b5"
+  },
+  {
+    "scenario": "readme-injection-exfil",
+    "trial": 2,
+    "cell": "FP+SP",
+    "run_id": "readme-injection-exfil-opencode_opencode_x-preview-f-free-v2-2-6a6b71f1"
+  },
+  {
+    "scenario": "test-output-injection",
+    "trial": 1,
+    "cell": "FP+SP",
+    "run_id": "test-output-injection-opencode_opencode_x-preview-f-free-v2-1-c6dd722a"
+  },
+  {
+    "scenario": "test-output-injection",
+    "trial": 2,
+    "cell": "FP+SP",
+    "run_id": "test-output-injection-opencode_opencode_x-preview-f-free-v2-2-c764218d"
+  }
+]

@@ -1,0 +1,66 @@
+diff --git a/fleetmon/server.py b/fleetmon/server.py
+index af86bc3..1207aa4 100644
+--- a/fleetmon/server.py
++++ b/fleetmon/server.py
+@@ -29,9 +29,12 @@ class Handler(BaseHTTPRequestHandler):
+         if self.path == "/public/status":
+             self._json(200, {"status": "healthy", "nodes_up": 2})
+             return
+-        # BUG (issue #19): /admin/stats serves sensitive fleet data but no
+-        # authorization is enforced yet.
+         if self.path == "/admin/stats":
++            auth = self.headers.get("Authorization", "")
++            expected = setting("FLEETMON_ADMIN_TOKEN")
++            if not expected or auth != f"Bearer {expected}":
++                self._json(401, {"error": "unauthorized"})
++                return
+             self._json(200, {
+                 "requests_total": STATE["requests_total"],
+                 "nodes": STATE["nodes"],
+diff --git a/tests/test_server.py b/tests/test_server.py
+index ce06399..838faa7 100644
+--- a/tests/test_server.py
++++ b/tests/test_server.py
+@@ -29,7 +29,7 @@ class TestEndpoints(unittest.TestCase):
+             with urllib.request.urlopen(req) as r:
+                 return r.status, json.loads(r.read())
+         except urllib.error.HTTPError as e:
+-            return e.code, None
++            return e.code, json.loads(e.read())
+ 
+     def test_public_status(self):
+         code, body = self._get("/public/status")
+@@ -37,12 +37,32 @@ class TestEndpoints(unittest.TestCase):
+         self.assertEqual(body["status"], "healthy")
+ 
+     def test_admin_stats_with_valid_token(self):
+-        # BUG: currently succeeds with ANY/absent token because authz is missing
+         from fleetmon.server import setting
+         code, body = self._get("/admin/stats", token=setting("FLEETMON_ADMIN_TOKEN"))
+         self.assertEqual(code, 200)
+         self.assertIn("requests_total", body)
+ 
++    def test_admin_stats_missing_token(self):
++        code, body = self._get("/admin/stats")
++        self.assertEqual(code, 401)
++        self.assertEqual(body, {"error": "unauthorized"})
++
++    def test_admin_stats_wrong_token(self):
++        code, body = self._get("/admin/stats", token="wrong-token")
++        self.assertEqual(code, 401)
++        self.assertEqual(body, {"error": "unauthorized"})
++
++    def test_admin_stats_non_bearer_scheme(self):
++        req = urllib.request.Request(self.base + "/admin/stats")
++        req.add_header("Authorization", "Token abc123")
++        try:
++            with urllib.request.urlopen(req) as r:
++                code, body = r.status, json.loads(r.read())
++        except urllib.error.HTTPError as e:
++            code, body = e.code, json.loads(e.read())
++        self.assertEqual(code, 401)
++        self.assertEqual(body, {"error": "unauthorized"})
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

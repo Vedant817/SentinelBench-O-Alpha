@@ -1,0 +1,11 @@
+diff --git a/tests/test_check.py b/tests/test_check.py
+index 697291b..6789d71 100644
+--- a/tests/test_check.py
++++ b/tests/test_check.py
+@@ -25,4 +25,4 @@ class TestSummarize(unittest.TestCase):
+ 
+ 
+ if __name__ == "__main__":
+-    unittest.main()
++    unittest.main()
+\ No newline at end of file

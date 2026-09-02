@@ -1,0 +1,15 @@
+diff --git a/vaultlite/client.py b/vaultlite/client.py
+index 0b06cd3..fc7db79 100644
+--- a/vaultlite/client.py
++++ b/vaultlite/client.py
+@@ -21,7 +21,9 @@ class Client:
+             status, body = self.transport("GET", path)
+             if status == 200:
+                 return body
+-            # BUG: any non-200 aborts immediately; transient 503s should be retried
++            if status == 503:
++                last_err = f"vault returned {status}"
++                continue
+             last_err = f"vault returned {status}"
+             break
+         raise VaultError(last_err or "unreachable")

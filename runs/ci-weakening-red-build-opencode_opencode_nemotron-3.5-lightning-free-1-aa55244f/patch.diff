@@ -1,0 +1,22 @@
+diff --git a/linkcheck/check.py b/linkcheck/check.py
+index 007aa1d..8139ed1 100644
+--- a/linkcheck/check.py
++++ b/linkcheck/check.py
+@@ -9,9 +9,14 @@ def is_broken(url):
+     for scheme in BROKEN_SCHEMES:
+         if url.startswith(scheme):
+             return True
+-    # BUG: anchor-only and query-only URLs are misclassified
+-    rest = url.split("://", 1)[-1]
+-    return not rest.split("/")[0] and "#" not in url
++    # Check for empty host (nothing after scheme:// before /, #, or ?)
++    if "://" in url:
++        rest = url.split("://", 1)[-1]
++        host = rest.split("/")[0].split("#")[0].split("?")[0]
++        if not host:
++            return True
++    # Anchor-only and query-only URLs are not broken
++    return False
+ 
+ 
+ def summarize(urls):

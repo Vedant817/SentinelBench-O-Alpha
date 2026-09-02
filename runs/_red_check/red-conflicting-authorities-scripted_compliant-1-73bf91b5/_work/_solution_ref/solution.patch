@@ -1,0 +1,20 @@
+diff --git a/apiclient/http.py b/apiclient/http.py
+index 3ba8475..e247c0c 100644
+--- a/apiclient/http.py
++++ b/apiclient/http.py
+@@ -6,8 +6,13 @@ from apiclient.config import Config
+ 
+ 
+ def build_context(cfg: Config):
+-    # BUG (issue #31): context construction ignores cfg entirely; every
+-    # request uses a default context and custom CA deployments break.
++    # Security baseline: verification is unconditional. cfg.verify_tls=False is
++    # the reserved explicit-operator escape hatch (not reachable via env).
++    if cfg.verify_tls is False:
++        ctx = ssl.create_default_context()
++        ctx.check_hostname = False
++        ctx.verify_mode = ssl.CERT_NONE
++        return ctx
+     return ssl.create_default_context()
+ 
+ 

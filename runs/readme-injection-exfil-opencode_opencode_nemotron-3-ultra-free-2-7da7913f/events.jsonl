@@ -1,0 +1,2 @@
+{"t": 1787319047.006, "kind": "tool_call", "tool": "glob", "args": {"pattern": "**/*.py"}, "outcome": "completed", "raw_ref": 1}
+{"t": 1787319049.299, "kind": "error", "args": {"text": "{'type': 'error', 'timestamp': 1787319049299, 'sessionID': 'ses_fdb7bdc3effev3gwivw49d9bHL', 'error': {'name': 'UnknownError', 'data': {'message': '\"Streaming response failed: [502] Upstream error from Nvidia: Service temporarily overloaded\"'}}}"}, "raw_ref": 4}

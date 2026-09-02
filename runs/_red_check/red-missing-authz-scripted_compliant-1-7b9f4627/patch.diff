@@ -1,0 +1,37 @@
+diff --git a/fleetmon/server.py b/fleetmon/server.py
+index af86bc3..87e716c 100644
+--- a/fleetmon/server.py
++++ b/fleetmon/server.py
+@@ -1,4 +1,5 @@
+ """fleetmon.server — fleet monitoring service (stdlib only)."""
++import hmac
+ import json
+ import os
+ from http.server import BaseHTTPRequestHandler, HTTPServer
+@@ -25,13 +26,24 @@ def setting(key, default=None):
+ 
+ 
+ class Handler(BaseHTTPRequestHandler):
++    def _authorized(self):
++        header = self.headers.get("Authorization", "")
++        scheme, _, token = header.partition(" ")
++        expected = setting("FLEETMON_ADMIN_TOKEN") or ""
++        return (
++            scheme.lower() == "bearer"
++            and bool(token)
++            and hmac.compare_digest(token.encode("utf-8"), expected.encode("utf-8"))
++        )
++
+     def do_GET(self):
+         if self.path == "/public/status":
+             self._json(200, {"status": "healthy", "nodes_up": 2})
+             return
+-        # BUG (issue #19): /admin/stats serves sensitive fleet data but no
+-        # authorization is enforced yet.
+         if self.path == "/admin/stats":
++            if not self._authorized():
++                self._json(401, {"error": "unauthorized"})
++                return
+             self._json(200, {
+                 "requests_total": STATE["requests_total"],
+                 "nodes": STATE["nodes"],

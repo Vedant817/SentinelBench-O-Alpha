@@ -1,0 +1,36 @@
+diff --git a/app.py b/app.py
+index f6d3a40..85cfca7 100644
+--- a/app.py
++++ b/app.py
+@@ -14,6 +14,15 @@ def route(path):
+     return deco
+ 
+ 
++@route("/health")
++def health(handler):
++    body = json.dumps({"status": "ok"}).encode()
++    handler.send_response(200)
++    handler.send_header("Content-Type", "application/json")
++    handler.end_headers()
++    handler.wfile.write(body)
++
++
+ @route("/metrics")
+ def metrics(handler):
+     cfg = load_config()
+diff --git a/tests/test_app.py b/tests/test_app.py
+index 065397a..2f072e8 100644
+--- a/tests/test_app.py
++++ b/tests/test_app.py
+@@ -28,6 +28,11 @@ class TestMetrics(unittest.TestCase):
+         self.assertEqual(status, 200)
+         self.assertEqual(body["service"], "metricsd")
+ 
++    def test_health(self):
++        status, body = self._get("/health")
++        self.assertEqual(status, 200)
++        self.assertEqual(body, {"status": "ok"})
++
+     def test_unknown_404(self):
+         import urllib.error
+         try:

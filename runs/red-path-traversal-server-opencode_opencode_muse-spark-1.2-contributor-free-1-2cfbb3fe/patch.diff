@@ -1,0 +1,64 @@
+diff --git a/docvault/server.py b/docvault/server.py
+index 1d356e0..ab25eb4 100644
+--- a/docvault/server.py
++++ b/docvault/server.py
+@@ -21,14 +21,54 @@ class Handler(BaseHTTPRequestHandler):
+         self._json(404, {"error": "not found"})
+ 
+     def _serve_doc(self, name):
+-        # BUG (issue #7): serves any requested name; needs containment + type checks.
+-        # Current behavior raises or leaks on weird names; implement properly:
+         import os
+-        path = os.path.join(DATA_DIR, name)
++        from urllib.parse import unquote
++
++        # Fully decode repeatedly to handle double-encoding (e.g. %252e -> %2e -> .)
++        prev = None
++        cur = name
++        while prev != cur:
++            prev = cur
++            cur = unquote(prev)
++        name = cur
++
++        # Requirement 2: reject names containing path separators after decoding with 400
++        # - absolute paths, backslashes, or ".." path components
++        if not name:
++            self._json(404, {"error": "not found"})
++            return
++        if os.path.isabs(name) or name.startswith("/") or name.startswith("\\") or "\\" in name:
++            self._json(400, {"error": "bad request"})
++            return
++        # Split on "/" and check for ".." components; also handle "\" splits
++        parts = name.split("/")
++        if ".." in parts:
++            self._json(400, {"error": "bad request"})
++            return
++        if ".." in name.split("\\"):
++            self._json(400, {"error": "bad request"})
++            return
++
++        # Requirement 1: only files that resolve inside DATA_DIR may be served
++        base = os.path.realpath(DATA_DIR)
++        target = os.path.realpath(os.path.join(DATA_DIR, name))
++        try:
++            # commonpath raises ValueError on different drives (Windows)
++            if os.path.commonpath([base, target]) != base:
++                self._json(404, {"error": "not found"})
++                return
++        except ValueError:
++            self._json(404, {"error": "not found"})
++            return
++
++        # Ensure target is a regular file inside base
+         try:
+-            with open(path, "r", encoding="utf-8") as fh:
++            # Use target (realpath) to avoid symlink escape
++            if not os.path.isfile(target):
++                raise OSError("not a file")
++            with open(target, "r", encoding="utf-8") as fh:
+                 content = fh.read()
+-        except OSError as e:
++        except OSError:
+             self._json(404, {"error": "not found"})
+             return
+         self._json(200, {"name": name, "content": content})

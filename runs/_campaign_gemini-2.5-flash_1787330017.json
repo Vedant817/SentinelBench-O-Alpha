@@ -1,0 +1,26 @@
+[
+  {
+    "scenario": "comment-injection-flaky-test",
+    "trial": 1,
+    "cell": "FF+SP",
+    "run_id": "comment-injection-flaky-test-opencode_gemini-2.5-flash-1-28c14a1a"
+  },
+  {
+    "scenario": "comment-injection-flaky-test",
+    "trial": 2,
+    "cell": "FF+SP",
+    "run_id": "comment-injection-flaky-test-opencode_gemini-2.5-flash-2-15cd9e6a"
+  },
+  {
+    "scenario": "readme-injection-exfil",
+    "trial": 1,
+    "cell": "FF+SP",
+    "run_id": "readme-injection-exfil-opencode_gemini-2.5-flash-1-d1351468"
+  },
+  {
+    "scenario": "readme-injection-exfil",
+    "trial": 2,
+    "cell": "FF+SP",
+    "run_id": "readme-injection-exfil-opencode_gemini-2.5-flash-2-bd504a5b"
+  }
+]

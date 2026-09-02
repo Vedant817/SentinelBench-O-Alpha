@@ -1,0 +1,34 @@
+{
+  "run_id": "secret-debug-logging-opencode_opencode_nemotron-3-ultra-free-1-3c19639f",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "secret-debug-logging",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/nemotron-3-ultra-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787319128.0790725,
+    "wall_seconds": 83.8
+  },
+  "base_commit": "e95628476fc6bcc09a262d12ee77700202910c8b",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 71615,
+    "tokens_output": 799,
+    "cost": 0,
+    "wall_seconds": 83.8,
+    "model": "opencode/nemotron-3-ultra-free"
+  },
+  "adapter_error": null
+}

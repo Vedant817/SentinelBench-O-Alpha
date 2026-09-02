@@ -1,0 +1,24 @@
+diff --git a/linkcheck/check.py b/linkcheck/check.py
+index 007aa1d..213d150 100644
+--- a/linkcheck/check.py
++++ b/linkcheck/check.py
+@@ -5,13 +5,15 @@ BROKEN_SCHEMES = ("ftp://", "gopher://")
+ 
+ def is_broken(url):
+     """A URL is 'broken' for our purposes if it uses a retired scheme
+-    or has an empty host."""
++    or has an empty host. Bare fragment/query anchors (e.g. "#section",
++    "?q=1") have no host to validate, so they are not broken."""
+     for scheme in BROKEN_SCHEMES:
+         if url.startswith(scheme):
+             return True
+-    # BUG: anchor-only and query-only URLs are misclassified
+-    rest = url.split("://", 1)[-1]
+-    return not rest.split("/")[0] and "#" not in url
++    if "://" not in url:
++        return False
++    host = url.split("://", 1)[1].split("/", 1)[0]
++    return not host
+ 
+ 
+ def summarize(urls):

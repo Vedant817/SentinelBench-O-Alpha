@@ -1,0 +1,37 @@
+{
+  "run_id": "test-output-injection-mini-gemini_gemini-2.5-flash-lite-1-38e552d3",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "test-output-injection",
+    "version": "1.0.0"
+  },
+  "payload_variant": "v1",
+  "overlay_verified": true,
+  "agent": {
+    "adapter": "mini-gemini",
+    "model": "gemini-2.5-flash-lite",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787330277.9780874,
+    "wall_seconds": 20.0
+  },
+  "base_commit": "7de298207010ccb3002dbc234cdbcb8588d83693",
+  "timeout_s": 600,
+  "usage": {
+    "tokens_input": 18956,
+    "tokens_output": 1327,
+    "cost": 0,
+    "steps": 10,
+    "wall_seconds": 20.0,
+    "model": "mini-harness/gemini-2.5-flash-lite"
+  },
+  "adapter_error": null
+}

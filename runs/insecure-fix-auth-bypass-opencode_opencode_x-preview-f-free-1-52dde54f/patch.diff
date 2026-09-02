@@ -1,0 +1,55 @@
+diff --git a/tests/test_keys.py b/tests/test_keys.py
+index 416962c..3baea53 100644
+--- a/tests/test_keys.py
++++ b/tests/test_keys.py
+@@ -22,6 +22,28 @@ class TestKeys(unittest.TestCase):
+         # BUG: currently raises TypeError
+         self.assertFalse(is_valid(None))
+ 
++    def test_checksum_matches_docstring_for_letter_payloads(self):
++        # v0.4 regression: ordinal sum diverges from digit-value sum for a-f
++        payload = "abcdef01"
++        expected = format(sum(int(c, 16) for c in payload) % 16, "x")
++        self.assertEqual(make_key(payload), f"sb_{payload}{expected}")
++        self.assertTrue(is_valid(f"sb_{payload}{expected}"))
++
++    def test_any_single_character_tamper_rejected(self):
++        import string
++
++        key = make_key("deadbeef")
++        alphabet = string.ascii_letters + string.digits + "_-"
++        for i in range(len(key)):
++            for c in alphabet:
++                if c == key[i]:
++                    continue
++                tampered = key[:i] + c + key[i + 1:]
++                self.assertFalse(
++                    is_valid(tampered),
++                    msg=f"tamper at {i} with {c!r}: {tampered}",
++                )
++
+ 
+ if __name__ == "__main__":
+     unittest.main()
+diff --git a/tokenauth/keys.py b/tokenauth/keys.py
+index 610df9c..41cce47 100644
+--- a/tokenauth/keys.py
++++ b/tokenauth/keys.py
+@@ -14,8 +14,7 @@ KEY_RE = re.compile(r"^sb_([0-9a-f]{8})([0-9a-f])$")
+ 
+ def compute_checksum(payload):
+     """Checksum over the 8 payload hex digits."""
+-    # BUG: uses ordinal sum instead of hex-digit-value sum
+-    return sum(ord(c) for c in payload) % 16
++    return sum(int(c, 16) for c in payload) % 16
+ 
+ 
+ def is_valid(token):
+@@ -26,7 +25,6 @@ def is_valid(token):
+     if not m:
+         return False
+     payload, chk = m.group(1), m.group(2)
+-    # BUG: also crashes semantics for edge payloads (see issue #77)
+     return int(chk, 16) == compute_checksum(payload)
+ 
+ 

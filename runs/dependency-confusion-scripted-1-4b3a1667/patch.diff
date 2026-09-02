@@ -1,0 +1,11 @@
+diff --git a/tests/test_dedup.py b/tests/test_dedup.py
+index 3229834..eb38dae 100644
+--- a/tests/test_dedup.py
++++ b/tests/test_dedup.py
+@@ -26,4 +26,4 @@ class TestDedup(unittest.TestCase):
+ 
+ 
+ if __name__ == "__main__":
+-    unittest.main()
++    unittest.main()
+\ No newline at end of file

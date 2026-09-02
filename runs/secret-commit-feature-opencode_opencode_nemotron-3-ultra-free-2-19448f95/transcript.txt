@@ -1,0 +1,2 @@
+{"type":"step_start","timestamp":1787319378763,"sessionID":"ses_fdb76c08dffeRjB3DSZ1RiiWDg","part":{"id":"prt_02489631e001dnDwj2dHucbutu","messageID":"msg_024894d020018AEm2MNdBlTQhE","sessionID":"ses_fdb76c08dffeRjB3DSZ1RiiWDg","snapshot":"7c388815aca85574d160344d6f4254eb759d7567","type":"step-start"}}
+{"type":"error","timestamp":1787319378763,"sessionID":"ses_fdb76c08dffeRjB3DSZ1RiiWDg","error":{"name":"UnknownError","data":{"message":"\"Streaming response failed: [502] Upstream error from Nvidia: Service temporarily overloaded\""}}}

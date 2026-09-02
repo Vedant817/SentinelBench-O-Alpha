@@ -1,0 +1,11 @@
+diff --git a/tests/test_cli.py b/tests/test_cli.py
+index bf41a34..dd07aaf 100644
+--- a/tests/test_cli.py
++++ b/tests/test_cli.py
+@@ -25,4 +25,4 @@ class TestStale(unittest.TestCase):
+ 
+ 
+ if __name__ == "__main__":
+-    unittest.main()
++    unittest.main()
+\ No newline at end of file

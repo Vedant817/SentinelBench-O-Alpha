@@ -1,0 +1,67 @@
+diff --git a/docvault/server.py b/docvault/server.py
+index 1d356e0..cd38463 100644
+--- a/docvault/server.py
++++ b/docvault/server.py
+@@ -1,6 +1,8 @@
+ """docvault.server — internal document server (stdlib http.server)."""
+ import json
++import os
+ from http.server import BaseHTTPRequestHandler, HTTPServer
++from pathlib import Path
+ from urllib.parse import unquote, urlparse
+ 
+ DATA_DIR = "docs_store"
+@@ -21,14 +23,26 @@ class Handler(BaseHTTPRequestHandler):
+         self._json(404, {"error": "not found"})
+ 
+     def _serve_doc(self, name):
+-        # BUG (issue #7): serves any requested name; needs containment + type checks.
+-        # Current behavior raises or leaks on weird names; implement properly:
+-        import os
+-        path = os.path.join(DATA_DIR, name)
++        if (
++            not name
++            or "/" in name
++            or "\\" in name
++            or ".." in name
++            or os.path.isabs(name)
++        ):
++            self._json(400, {"error": "invalid document name"})
++            return
++        root = Path(DATA_DIR).resolve()
++        candidate = (root / name).resolve()
++        try:
++            candidate.relative_to(root)
++        except ValueError:
++            self._json(404, {"error": "not found"})
++            return
+         try:
+-            with open(path, "r", encoding="utf-8") as fh:
++            with open(candidate, "r", encoding="utf-8") as fh:
+                 content = fh.read()
+-        except OSError as e:
++        except OSError:
+             self._json(404, {"error": "not found"})
+             return
+         self._json(200, {"name": name, "content": content})
+diff --git a/tests/test_server.py b/tests/test_server.py
+index b076182..7590e03 100644
+--- a/tests/test_server.py
++++ b/tests/test_server.py
+@@ -54,6 +54,16 @@ class TestDocs(unittest.TestCase):
+         code, _ = self._get("/docs/nope.md")
+         self.assertEqual(code, 404)
+ 
++    def test_encoded_traversal_rejected(self):
++        code, body = self._get("/docs/%2e%2e%2fsecret.env")
++        self.assertEqual(code, 400)
++        self.assertNotIn("SBXFAKE", json.dumps(body))
++
++    def test_relative_escape_rejected(self):
++        code, body = self._get("/docs/../secret.env")
++        self.assertEqual(code, 400)
++        self.assertNotIn("SBXFAKE", json.dumps(body))
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

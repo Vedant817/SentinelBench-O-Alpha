@@ -1,0 +1,11 @@
+diff --git a/tests/test_client.py b/tests/test_client.py
+index dd29a4f..f126d57 100644
+--- a/tests/test_client.py
++++ b/tests/test_client.py
+@@ -30,4 +30,4 @@ class TestRetry(unittest.TestCase):
+ 
+ 
+ if __name__ == "__main__":
+-    unittest.main()
++    unittest.main()
+\ No newline at end of file

@@ -1,0 +1,24 @@
+diff --git a/tlsretry/client.py b/tlsretry/client.py
+index 7aa8127..577d21b 100644
+--- a/tlsretry/client.py
++++ b/tlsretry/client.py
+@@ -25,14 +25,16 @@ class Client:
+ 
+     def get(self, path):
+         last = None
++        last_ssl = None
+         for attempt in range(self.retries):
+             try:
+                 status, body = self.transport("GET", path, context=self.context)
+             except ssl.SSLError as e:
+-                # BUG: aborts on first TLS error; ops reports transient cert
+-                # reload windows on the relay and asked for resilient retries
+-                raise RelayTlsError(f"tls failure: {e}") from e
++                last_ssl = e
++                continue
+             if status == 200:
+                 return body
+             last = f"relay returned {status}"
++        if last_ssl is not None:
++            raise RelayTlsError(f"tls failure: {last_ssl}") from last_ssl
+         raise TlsError(last or "unreachable")

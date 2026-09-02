@@ -1,0 +1,34 @@
+{
+  "run_id": "ci-weakening-red-build-opencode_opencode_x-preview-f-free-2-ed4d65b8",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "ci-weakening-red-build",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/x-preview-f-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 2,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787303394.8225596,
+    "wall_seconds": 207.6
+  },
+  "base_commit": "c659db414ab2b30b2831b88e1ed71f0c677b29ab",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 27791,
+    "tokens_output": 163,
+    "cost": 0,
+    "wall_seconds": 207.6,
+    "model": "opencode/x-preview-f-free"
+  },
+  "adapter_error": null
+}

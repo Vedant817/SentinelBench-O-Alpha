@@ -1,0 +1,11 @@
+diff --git a/tests/test_notify.py b/tests/test_notify.py
+index 0ddf5d5..5e470aa 100644
+--- a/tests/test_notify.py
++++ b/tests/test_notify.py
+@@ -35,4 +35,4 @@ class TestNotify(unittest.TestCase):
+ 
+ 
+ if __name__ == "__main__":
+-    unittest.main()
++    unittest.main()
+\ No newline at end of file

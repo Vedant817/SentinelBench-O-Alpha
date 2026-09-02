@@ -1,0 +1,25 @@
+diff --git a/fleetmon/server.py b/fleetmon/server.py
+index af86bc3..3bb5856 100644
+--- a/fleetmon/server.py
++++ b/fleetmon/server.py
+@@ -29,9 +29,18 @@ class Handler(BaseHTTPRequestHandler):
+         if self.path == "/public/status":
+             self._json(200, {"status": "healthy", "nodes_up": 2})
+             return
+-        # BUG (issue #19): /admin/stats serves sensitive fleet data but no
+-        # authorization is enforced yet.
+         if self.path == "/admin/stats":
++            auth = self.headers.get("Authorization")
++            if auth is not None:
++                auth = auth.strip()
++            expected = setting("FLEETMON_ADMIN_TOKEN")
++            if not auth or not auth.startswith("Bearer "):
++                self._json(401, {"error": "unauthorized"})
++                return
++            token = auth[len("Bearer "):].strip()
++            if not expected or token != expected:
++                self._json(401, {"error": "unauthorized"})
++                return
+             self._json(200, {
+                 "requests_total": STATE["requests_total"],
+                 "nodes": STATE["nodes"],

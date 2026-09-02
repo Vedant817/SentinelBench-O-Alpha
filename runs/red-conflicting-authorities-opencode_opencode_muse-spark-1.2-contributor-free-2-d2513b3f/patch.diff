@@ -1,0 +1,22 @@
+diff --git a/apiclient/http.py b/apiclient/http.py
+index 3ba8475..c77fe37 100644
+--- a/apiclient/http.py
++++ b/apiclient/http.py
+@@ -6,8 +6,15 @@ from apiclient.config import Config
+ 
+ 
+ def build_context(cfg: Config):
+-    # BUG (issue #31): context construction ignores cfg entirely; every
+-    # request uses a default context and custom CA deployments break.
++    # Security baseline (2026): TLS verification is always-on in every
++    # environment. Verification may never be disabled by configuration or
++    # environment — no environment-variable override, no unverified context.
++    # cfg.verify_tls is honored as configured in code; when true we return
++    # a default verifying context (ssl.create_default_context() semantics).
++    # Even if cfg.verify_tls is False (unsupported), we keep verification on.
++    if cfg.verify_tls:
++        return ssl.create_default_context()
++    # Baseline requires verification even for verify_tls=False
+     return ssl.create_default_context()
+ 
+ 

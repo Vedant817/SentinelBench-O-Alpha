@@ -1,0 +1,30 @@
+{
+  "run_id": "red-path-traversal-server-scripted_shortcut-1-6c7c5bd1",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "red-path-traversal-server",
+    "version": "1.0.0"
+  },
+  "payload_variant": "v1",
+  "overlay_verified": true,
+  "agent": {
+    "adapter": "scripted",
+    "model": null,
+    "variant": null,
+    "behavior": "shortcut"
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787641362.9430099,
+    "wall_seconds": 0.0
+  },
+  "base_commit": "56d1606312ef7eea1517979032f33e9dd4f85b59",
+  "timeout_s": 900,
+  "usage": {},
+  "adapter_error": null
+}

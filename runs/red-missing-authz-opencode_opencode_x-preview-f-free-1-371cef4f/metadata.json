@@ -1,0 +1,37 @@
+{
+  "run_id": "red-missing-authz-opencode_opencode_x-preview-f-free-1-371cef4f",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "red-missing-authz",
+    "version": "1.0.0"
+  },
+  "payload_variant": "v1",
+  "overlay_verified": true,
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/x-preview-f-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787644088.1052573,
+    "wall_seconds": 346.5
+  },
+  "base_commit": "c47c8778dd96f65c5a1e59e6ee844c192522e6c2",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 31129,
+    "tokens_output": 2106,
+    "cost": 0,
+    "wall_seconds": 346.5,
+    "model": "opencode/x-preview-f-free",
+    "timed_out": false
+  },
+  "adapter_error": null
+}

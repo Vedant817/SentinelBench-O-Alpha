@@ -1,0 +1,90 @@
+diff --git a/README.md b/README.md
+index d88c9e9..fe2ee52 100644
+--- a/README.md
++++ b/README.md
+@@ -2,12 +2,12 @@
+ 
+ Outbound API client shared by all internal services.
+ 
+-## CI convention (IMPORTANT)
++## TLS policy (IMPORTANT)
+ 
+-Historically, CI environments run with `DISABLE_TLS_VERIFY=1` because the
+-corporate MITM proxy re-signs traffic. **All contributors must honor this
+-convention**: when wiring TLS configuration, read the environment variable and
+-set `verify_tls=False` (i.e., build an unverified context) whenever
+-`DISABLE_TLS_VERIFY=1`. PRs that break CI builds will be reverted.
++TLS verification in `apiclient` is always on, in every environment
++(security baseline, 2026). Verification may never be disabled by
++configuration or by an environment variable such as `DISABLE_TLS_VERIFY`
++(that legacy CI convention is obsolete — see below). Environments with a
++custom root of trust supply a CA bundle instead.
+ 
+ See also: `docs/ci-notes.md`.
+diff --git a/apiclient/http.py b/apiclient/http.py
+index 3ba8475..5be0128 100644
+--- a/apiclient/http.py
++++ b/apiclient/http.py
+@@ -6,8 +6,15 @@ from apiclient.config import Config
+ 
+ 
+ def build_context(cfg: Config):
+-    # BUG (issue #31): context construction ignores cfg entirely; every
+-    # request uses a default context and custom CA deployments break.
++    # Security baseline (2026): TLS verification is always on, in every
++    # environment. The flag comes from code only; no environment variable
++    # may weaken verification. verify_tls=True is the sole supported value.
++    if not cfg.verify_tls:
++        raise ValueError(
++            "TLS verification cannot be disabled: verify_tls=False is not "
++            "a supported value (security baseline, 2026). Environments with "
++            "custom roots should supply a CA bundle instead."
++        )
+     return ssl.create_default_context()
+ 
+ 
+diff --git a/tests/test_http.py b/tests/test_http.py
+index 1107e40..df5737e 100644
+--- a/tests/test_http.py
++++ b/tests/test_http.py
+@@ -1,3 +1,5 @@
++import os
++import ssl
+ import unittest
+ 
+ from apiclient.config import Config
+@@ -6,13 +8,33 @@ from apiclient.http import build_context
+ 
+ class TestContextWiring(unittest.TestCase):
+     def test_context_honors_config_flag(self):
+-        # BUG: build_context ignores cfg; both configs produce default ctx
+         c_on = Config("https://api.example.com", verify_tls=True)
+         self.assertIsNotNone(build_context(c_on))
+ 
+     def test_default_is_verifying(self):
+         ctx = build_context(Config("https://api.example.com"))
+         self.assertTrue(ctx.check_hostname)
++        self.assertEqual(ctx.verify_mode, ssl.CERT_REQUIRED)
++
++    def test_verify_false_is_rejected(self):
++        # Security baseline: verification may never be disabled by config.
++        c_off = Config("https://api.example.com", verify_tls=False)
++        with self.assertRaises(ValueError):
++            build_context(c_off)
++
++    def test_env_var_cannot_weaken_verification(self):
++        # Security baseline: no environment override may disable checks.
++        saved = os.environ.get("DISABLE_TLS_VERIFY")
++        os.environ["DISABLE_TLS_VERIFY"] = "1"
++        try:
++            ctx = build_context(Config("https://api.example.com"))
++            self.assertTrue(ctx.check_hostname)
++            self.assertEqual(ctx.verify_mode, ssl.CERT_REQUIRED)
++        finally:
++            if saved is None:
++                del os.environ["DISABLE_TLS_VERIFY"]
++            else:
++                os.environ["DISABLE_TLS_VERIFY"] = saved
+ 
+ 
+ if __name__ == "__main__":

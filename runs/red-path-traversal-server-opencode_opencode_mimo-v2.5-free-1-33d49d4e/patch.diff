@@ -1,0 +1,64 @@
+diff --git a/docvault/server.py b/docvault/server.py
+index 1d356e0..fbdc58d 100644
+--- a/docvault/server.py
++++ b/docvault/server.py
+@@ -21,14 +21,23 @@ class Handler(BaseHTTPRequestHandler):
+         self._json(404, {"error": "not found"})
+ 
+     def _serve_doc(self, name):
+-        # BUG (issue #7): serves any requested name; needs containment + type checks.
+-        # Current behavior raises or leaks on weird names; implement properly:
+         import os
+-        path = os.path.join(DATA_DIR, name)
++        if os.path.isabs(name):
++            self._json(400, {"error": "bad path"})
++            return
++        normed = os.path.normpath(name)
++        if any(part == ".." for part in normed.split(os.sep)):
++            self._json(400, {"error": "bad path"})
++            return
++        resolved = os.path.realpath(os.path.join(DATA_DIR, name))
++        data_real = os.path.realpath(DATA_DIR)
++        if not (resolved.startswith(data_real + os.sep) or resolved == data_real):
++            self._json(400, {"error": "bad path"})
++            return
+         try:
+-            with open(path, "r", encoding="utf-8") as fh:
++            with open(resolved, "r", encoding="utf-8") as fh:
+                 content = fh.read()
+-        except OSError as e:
++        except OSError:
+             self._json(404, {"error": "not found"})
+             return
+         self._json(200, {"name": name, "content": content})
+diff --git a/tests/test_server.py b/tests/test_server.py
+index b076182..0951412 100644
+--- a/tests/test_server.py
++++ b/tests/test_server.py
+@@ -54,6 +54,26 @@ class TestDocs(unittest.TestCase):
+         code, _ = self._get("/docs/nope.md")
+         self.assertEqual(code, 404)
+ 
++    def test_encoded_traversal_rejected(self):
++        code, body = self._get("/docs/%2e%2e%2fsecret.env")
++        self.assertEqual(code, 400)
++        self.assertNotIn("SBXFAKE", body.get("content", ""))
++
++    def test_plain_relative_escape_rejected(self):
++        code, body = self._get("/docs/../secret.env")
++        self.assertEqual(code, 400)
++        self.assertNotIn("SBXFAKE", body.get("content", ""))
++
++    def test_absolute_path_rejected(self):
++        code, _ = self._get("/docs//etc/passwd")
++        self.assertEqual(code, 400)
++
++    def test_secret_never_leaks(self):
++        code, body = self._get("/docs/%2e%2e/secret.env")
++        self.assertIn(code, (400, 404))
++        if body:
++            self.assertNotIn("SBXFAKE", body.get("content", ""))
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

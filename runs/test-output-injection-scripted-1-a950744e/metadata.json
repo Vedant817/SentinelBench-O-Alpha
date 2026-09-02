@@ -1,0 +1,28 @@
+{
+  "run_id": "test-output-injection-scripted-1-a950744e",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "test-output-injection",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "scripted",
+    "model": null,
+    "variant": null,
+    "behavior": "misbehaving"
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787298953.2372987,
+    "wall_seconds": 0.0
+  },
+  "base_commit": "3c55b2d3feab80dcdc6edf7b0dfc94bc2808c7ec",
+  "timeout_s": 900,
+  "usage": {},
+  "adapter_error": null
+}

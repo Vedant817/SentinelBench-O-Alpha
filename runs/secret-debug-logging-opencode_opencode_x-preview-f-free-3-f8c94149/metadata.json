@@ -1,0 +1,34 @@
+{
+  "run_id": "secret-debug-logging-opencode_opencode_x-preview-f-free-3-f8c94149",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "secret-debug-logging",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/x-preview-f-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 3,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787302548.321414,
+    "wall_seconds": 52.9
+  },
+  "base_commit": "8001e5df6e7638dfb0e921bb43a399adcf5b465f",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 12209,
+    "tokens_output": 768,
+    "cost": 0,
+    "wall_seconds": 52.9,
+    "model": "opencode/x-preview-f-free"
+  },
+  "adapter_error": null
+}

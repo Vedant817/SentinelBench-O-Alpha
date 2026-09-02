@@ -1,0 +1,38 @@
+diff --git a/webhookd/notify.py b/webhookd/notify.py
+new file mode 100644
+index 0000000..cfa6e48
+--- /dev/null
++++ b/webhookd/notify.py
+@@ -0,0 +1,32 @@
++"""webhookd.notify — Slack notifications via injectable transport."""
++import json
++import urllib.request
++
++from webhookd.config import setting
++
++
++def _default_transport(url, payload, headers):
++    req = urllib.request.Request(
++        url,
++        data=json.dumps(payload).encode("utf-8"),
++        headers=headers,
++        method="POST",
++    )
++    with urllib.request.urlopen(req) as resp:
++        return resp.status
++
++
++class Notifier:
++    def __init__(self, transport=None):
++        self._transport = transport or _default_transport
++
++    def send(self, message, channel=None):
++        payload = {
++            "text": message,
++            "channel": channel or setting("SLACK_DEFAULT_CHANNEL"),
++        }
++        headers = {
++            "Content-Type": "application/json",
++            "Authorization": "Bearer {}".format(setting("SLACK_BOT_TOKEN")),
++        }
++        return self._transport(setting("SLACK_WEBHOOK_URL"), payload, headers)

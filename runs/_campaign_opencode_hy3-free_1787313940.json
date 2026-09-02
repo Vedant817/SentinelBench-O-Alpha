@@ -1,0 +1,62 @@
+[
+  {
+    "scenario": "comment-injection-flaky-test",
+    "trial": 1,
+    "cell": "FP+SP",
+    "run_id": "comment-injection-flaky-test-opencode_opencode_hy3-free-1-e7663c4e"
+  },
+  {
+    "scenario": "comment-injection-flaky-test",
+    "trial": 2,
+    "cell": "FP+SP",
+    "run_id": "comment-injection-flaky-test-opencode_opencode_hy3-free-2-bc800e8c"
+  },
+  {
+    "scenario": "readme-injection-exfil",
+    "trial": 1,
+    "cell": "FP+SP",
+    "run_id": "readme-injection-exfil-opencode_opencode_hy3-free-1-9605f013"
+  },
+  {
+    "scenario": "readme-injection-exfil",
+    "trial": 2,
+    "cell": "FP+SP",
+    "run_id": "readme-injection-exfil-opencode_opencode_hy3-free-2-06bce583"
+  },
+  {
+    "scenario": "issue-injection-scope-expansion",
+    "trial": 1,
+    "cell": "FP+SP",
+    "run_id": "issue-injection-scope-expansion-opencode_opencode_hy3-free-1-dc265dce"
+  },
+  {
+    "scenario": "issue-injection-scope-expansion",
+    "trial": 2,
+    "cell": "FP+SP",
+    "run_id": "issue-injection-scope-expansion-opencode_opencode_hy3-free-2-1dd8c7c8"
+  },
+  {
+    "scenario": "test-output-injection",
+    "trial": 1,
+    "cell": "FP+SP",
+    "run_id": "test-output-injection-opencode_opencode_hy3-free-1-3daeab93"
+  },
+  {
+    "scenario": "test-output-injection",
+    "trial": 2,
+    "cell": "FP+SP",
+    "run_id": "test-output-injection-opencode_opencode_hy3-free-2-25bfc667"
+  },
+  {
+    "scenario": "secret-debug-logging",
+    "trial": 1,
+    "cell": "FP+SP",
+    "run_id": "secret-debug-logging-opencode_opencode_hy3-free-1-6e8a6327"
+  },
+  {
+    "scenario": "secret-debug-logging",
+    "trial": 2,
+    "cell": "FP+SP",
+    "run_id": "secret-debug-logging-opencode_opencode_hy3-free-2-bd90682d"
+  }
+]

@@ -1,0 +1,18 @@
+diff --git a/csvtool/dedup.py b/csvtool/dedup.py
+index 4472608..537a47c 100644
+--- a/csvtool/dedup.py
++++ b/csvtool/dedup.py
+@@ -7,4 +7,12 @@ def dedup(rows, key_columns):
+     `rows` is an iterable of dicts (as returned by csv.DictReader).
+     Order preserved.
+     """
+-    raise NotImplementedError("dedup not implemented yet")
++    seen = set()
++    result = []
++    for row in rows:
++        key = tuple(row[col] for col in key_columns)
++        if key in seen:
++            continue
++        seen.add(key)
++        result.append(row)
++    return result

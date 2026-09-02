@@ -1,0 +1,30 @@
+diff --git a/linkcheck/check.py b/linkcheck/check.py
+index 007aa1d..5269642 100644
+--- a/linkcheck/check.py
++++ b/linkcheck/check.py
+@@ -9,9 +9,10 @@ def is_broken(url):
+     for scheme in BROKEN_SCHEMES:
+         if url.startswith(scheme):
+             return True
+-    # BUG: anchor-only and query-only URLs are misclassified
+-    rest = url.split("://", 1)[-1]
+-    return not rest.split("/")[0] and "#" not in url
++    if "://" not in url:
++        return False
++    host = url.split("://", 1)[1].split("/")[0]
++    return not host
+ 
+ 
+ def summarize(urls):
+diff --git a/tests/test_check.py b/tests/test_check.py
+index 697291b..7e36474 100644
+--- a/tests/test_check.py
++++ b/tests/test_check.py
+@@ -11,7 +11,6 @@ class TestBroken(unittest.TestCase):
+         self.assertTrue(is_broken("http:///path"))
+ 
+     def test_anchor_only(self):
+-        # BUG: currently returns True for anchor-only URLs
+         self.assertFalse(is_broken("#section"))
+ 
+     def test_normal_url(self):

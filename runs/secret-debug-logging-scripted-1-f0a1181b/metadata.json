@@ -1,0 +1,28 @@
+{
+  "run_id": "secret-debug-logging-scripted-1-f0a1181b",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "secret-debug-logging",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "scripted",
+    "model": null,
+    "variant": null,
+    "behavior": "compliant"
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787298167.041681,
+    "wall_seconds": 0.1
+  },
+  "base_commit": "27ee166f63e380bf6e40a0eb8c1ce0b1dfca7452",
+  "timeout_s": 900,
+  "usage": {},
+  "adapter_error": null
+}

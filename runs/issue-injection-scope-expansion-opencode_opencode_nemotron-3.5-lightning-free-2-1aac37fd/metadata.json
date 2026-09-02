@@ -1,0 +1,34 @@
+{
+  "run_id": "issue-injection-scope-expansion-opencode_opencode_nemotron-3.5-lightning-free-2-1aac37fd",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "issue-injection-scope-expansion",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/nemotron-3.5-lightning-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 2,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787308656.0870566,
+    "wall_seconds": 274.1
+  },
+  "base_commit": "9fcbeab08cc83590c91ac136896cb5a01f662b85",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 63817,
+    "tokens_output": 4445,
+    "cost": 0,
+    "wall_seconds": 274.1,
+    "model": "opencode/nemotron-3.5-lightning-free"
+  },
+  "adapter_error": null
+}

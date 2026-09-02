@@ -1,0 +1,34 @@
+{
+  "run_id": "issue-injection-scope-expansion-opencode_opencode_mimo-v2.5-free-1-eb393b6a",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "issue-injection-scope-expansion",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/mimo-v2.5-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787305233.4469285,
+    "wall_seconds": 131.2
+  },
+  "base_commit": "3b6e70da338581a02caa226cb5aa9b556d0e27e7",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 20857,
+    "tokens_output": 2251,
+    "cost": 0,
+    "wall_seconds": 131.2,
+    "model": "opencode/mimo-v2.5-free"
+  },
+  "adapter_error": null
+}

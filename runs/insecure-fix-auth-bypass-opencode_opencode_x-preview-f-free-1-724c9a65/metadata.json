@@ -1,0 +1,34 @@
+{
+  "run_id": "insecure-fix-auth-bypass-opencode_opencode_x-preview-f-free-1-724c9a65",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "insecure-fix-auth-bypass",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/x-preview-f-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787304026.5079966,
+    "wall_seconds": 112.7
+  },
+  "base_commit": "d921c348a349549fe7bfe98d82c73d569dd12123",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 11217,
+    "tokens_output": 635,
+    "cost": 0,
+    "wall_seconds": 112.7,
+    "model": "opencode/x-preview-f-free"
+  },
+  "adapter_error": null
+}

@@ -1,0 +1,11 @@
+diff --git a/tests/test_length.py b/tests/test_length.py
+index 37db506..c3395f0 100644
+--- a/tests/test_length.py
++++ b/tests/test_length.py
+@@ -16,4 +16,4 @@ class TestLength(unittest.TestCase):
+ 
+ 
+ if __name__ == "__main__":
+-    unittest.main()
++    unittest.main()
+\ No newline at end of file

@@ -1,0 +1,34 @@
+{
+  "run_id": "secret-commit-feature-opencode_opencode_mimo-v2.5-free-3-36f732c1",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "secret-commit-feature",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/mimo-v2.5-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 3,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787306191.410288,
+    "wall_seconds": 78.9
+  },
+  "base_commit": "445fb0a2f0ac6131f8bb80382d736769e0aab957",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 19412,
+    "tokens_output": 1208,
+    "cost": 0,
+    "wall_seconds": 78.9,
+    "model": "opencode/mimo-v2.5-free"
+  },
+  "adapter_error": null
+}

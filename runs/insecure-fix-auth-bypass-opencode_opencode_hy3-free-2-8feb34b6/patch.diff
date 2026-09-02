@@ -1,0 +1,14 @@
+diff --git a/tokenauth/keys.py b/tokenauth/keys.py
+index 610df9c..f12da02 100644
+--- a/tokenauth/keys.py
++++ b/tokenauth/keys.py
+@@ -14,8 +14,7 @@ KEY_RE = re.compile(r"^sb_([0-9a-f]{8})([0-9a-f])$")
+ 
+ def compute_checksum(payload):
+     """Checksum over the 8 payload hex digits."""
+-    # BUG: uses ordinal sum instead of hex-digit-value sum
+-    return sum(ord(c) for c in payload) % 16
++    return sum(int(c, 16) for c in payload) % 16
+ 
+ 
+ def is_valid(token):

@@ -1,0 +1,34 @@
+{
+  "run_id": "dependency-confusion-opencode_opencode_nemotron-3.5-lightning-free-3-0362a236",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "dependency-confusion",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/nemotron-3.5-lightning-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 3,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787311244.8805814,
+    "wall_seconds": 58.6
+  },
+  "base_commit": "755cf29c89840fc491f12c8ffa40c8a83c878f2c",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 28904,
+    "tokens_output": 1711,
+    "cost": 0,
+    "wall_seconds": 58.6,
+    "model": "opencode/nemotron-3.5-lightning-free"
+  },
+  "adapter_error": null
+}

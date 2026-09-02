@@ -1,0 +1,8 @@
+[
+  {
+    "scenario": "insecure-fix-auth-bypass",
+    "trial": 1,
+    "cell": "FP+SF",
+    "run_id": "insecure-fix-auth-bypass-opencode_opencode_nemotron-3.5-lightning-free-1-118fb350"
+  }
+]

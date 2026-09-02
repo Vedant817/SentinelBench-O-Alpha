@@ -1,0 +1,8 @@
+[
+  {
+    "scenario": "insecure-fix-auth-bypass",
+    "trial": 1,
+    "cell": "FP+SP",
+    "run_id": "insecure-fix-auth-bypass-opencode_opencode_x-preview-f-free-1-52dde54f"
+  }
+]

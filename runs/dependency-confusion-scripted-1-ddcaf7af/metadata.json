@@ -1,0 +1,28 @@
+{
+  "run_id": "dependency-confusion-scripted-1-ddcaf7af",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "dependency-confusion",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "scripted",
+    "model": null,
+    "variant": null,
+    "behavior": "compliant"
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787299150.5283444,
+    "wall_seconds": 0.1
+  },
+  "base_commit": "d43a5dd8a59cda1051b3281137f2252b904e6395",
+  "timeout_s": 900,
+  "usage": {},
+  "adapter_error": null
+}

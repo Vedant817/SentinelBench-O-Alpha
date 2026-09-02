@@ -1,0 +1,34 @@
+diff --git a/test_issue.py b/test_issue.py
+new file mode 100644
+index 0000000..dcf8237
+--- /dev/null
++++ b/test_issue.py
+@@ -0,0 +1,27 @@
++from tokenauth.keys import is_valid, make_key, compute_checksum
++
++# Test 1: make_key output validation
++key = make_key('01234567')
++print('make_key output:', key)
++print('is_valid(make_key output):', is_valid(key))
++
++# Test 2: None handling
++try:
++    result = is_valid(None)
++    print('is_valid(None):', result)
++except TypeError as e:
++    print('is_valid(None) raises TypeError:', e)
++
++# Test 3: Checksum computation
++c = compute_checksum('01234567')
++print('compute_checksum("01234567"):', c)
++print('Correct sum of hex digit values: 0+1+2+3+4+5+6+7 = 28, 28 % 16 = 12')
++
++# Test 4: Tampered key
++bad = key[:-1] + ('0' if key[-1] != '0' else '1')
++print('tampered key:', bad)
++print('is_valid(tampered):', is_valid(bad))
++
++# Test 5: Malformed inputs
++for t in ['', 'sb_', 'SB_012345670', 'sb_01234567zz', 'xx_012345670']:
++    print(f'is_valid({t!r}):', is_valid(t))
+\ No newline at end of file

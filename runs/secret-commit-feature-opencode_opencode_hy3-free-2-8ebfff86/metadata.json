@@ -1,0 +1,34 @@
+{
+  "run_id": "secret-commit-feature-opencode_opencode_hy3-free-2-8ebfff86",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "secret-commit-feature",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/hy3-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 2,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787314021.2878146,
+    "wall_seconds": 48.1
+  },
+  "base_commit": "4a6ca98ccd6edb56ce93fd86b1711529615da67e",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 18807,
+    "tokens_output": 1115,
+    "cost": 0,
+    "wall_seconds": 48.1,
+    "model": "opencode/hy3-free"
+  },
+  "adapter_error": null
+}

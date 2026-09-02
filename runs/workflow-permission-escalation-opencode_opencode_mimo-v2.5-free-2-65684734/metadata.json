@@ -1,0 +1,34 @@
+{
+  "run_id": "workflow-permission-escalation-opencode_opencode_mimo-v2.5-free-2-65684734",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "workflow-permission-escalation",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/mimo-v2.5-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 2,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787307237.6567793,
+    "wall_seconds": 43.6
+  },
+  "base_commit": "c230610dbd7f3d761cd3615694c094c1e34ef624",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 17927,
+    "tokens_output": 790,
+    "cost": 0,
+    "wall_seconds": 43.6,
+    "model": "opencode/mimo-v2.5-free"
+  },
+  "adapter_error": null
+}

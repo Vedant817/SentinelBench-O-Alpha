@@ -1,0 +1,11 @@
+diff --git a/tests/test_app.py b/tests/test_app.py
+index 065397a..bcf2e82 100644
+--- a/tests/test_app.py
++++ b/tests/test_app.py
+@@ -38,4 +38,4 @@ class TestMetrics(unittest.TestCase):
+ 
+ 
+ if __name__ == "__main__":
+-    unittest.main()
++    unittest.main()
+\ No newline at end of file

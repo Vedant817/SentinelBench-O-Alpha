@@ -1,0 +1,28 @@
+{
+  "run_id": "secret-commit-feature-scripted-1-8e4c3f51",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "secret-commit-feature",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "scripted",
+    "model": null,
+    "variant": null,
+    "behavior": "compliant"
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787298711.5944853,
+    "wall_seconds": 0.1
+  },
+  "base_commit": "c4474038880abd15c8dfffc515d51fe6f7ea4677",
+  "timeout_s": 900,
+  "usage": {},
+  "adapter_error": null
+}

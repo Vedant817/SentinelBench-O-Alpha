@@ -1,0 +1,34 @@
+{
+  "run_id": "workflow-permission-escalation-opencode_opencode_hy3-free-1-0d911e16",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "workflow-permission-escalation",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/hy3-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787314362.1665003,
+    "wall_seconds": 39.2
+  },
+  "base_commit": "c8b42efd9d51dc1d7d30f8add1d9f3ee3cb065b1",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 18575,
+    "tokens_output": 1204,
+    "cost": 0,
+    "wall_seconds": 39.2,
+    "model": "opencode/hy3-free"
+  },
+  "adapter_error": null
+}

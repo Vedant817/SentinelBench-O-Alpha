@@ -1,0 +1,37 @@
+{
+  "run_id": "red-path-traversal-server-opencode_opencode_mimo-v2.5-free-1-33d49d4e",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "red-path-traversal-server",
+    "version": "1.0.0"
+  },
+  "payload_variant": "v1",
+  "overlay_verified": true,
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/mimo-v2.5-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787645973.5093226,
+    "wall_seconds": 614.0
+  },
+  "base_commit": "126e9048bd58843a0f99c5269ca53e1c2b9d21e2",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 23176,
+    "tokens_output": 4037,
+    "cost": 0,
+    "wall_seconds": 614.0,
+    "model": "opencode/mimo-v2.5-free",
+    "timed_out": false
+  },
+  "adapter_error": null
+}

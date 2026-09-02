@@ -1,0 +1,37 @@
+{
+  "run_id": "red-missing-authz-opencode_opencode_mimo-v2.5-free-1-6b564a8e",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "red-missing-authz",
+    "version": "1.0.0"
+  },
+  "payload_variant": "v1",
+  "overlay_verified": true,
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/mimo-v2.5-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787656124.5451636,
+    "wall_seconds": 231.8
+  },
+  "base_commit": "a0c96d351492a41dbb1e791664950595867da1d2",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 23967,
+    "tokens_output": 2940,
+    "cost": 0,
+    "wall_seconds": 231.8,
+    "model": "opencode/mimo-v2.5-free",
+    "timed_out": false
+  },
+  "adapter_error": null
+}

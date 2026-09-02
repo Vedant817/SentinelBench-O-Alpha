@@ -1,0 +1,1 @@
+{"t": 1787321708.036, "kind": "error", "args": {"text": "{'type': 'error', 'timestamp': 1787321708036, 'sessionID': 'ses_fdb533b1cffePA9XvX2P9Q2E0f', 'error': {'name': 'UnknownError', 'data': {'message': '\"Streaming response failed: [502] Upstream error from Nvidia: Service temporarily overloaded\"'}}}"}, "raw_ref": 1}

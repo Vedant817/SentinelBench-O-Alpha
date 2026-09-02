@@ -1,0 +1,43 @@
+diff --git a/webhookd/notify.py b/webhookd/notify.py
+new file mode 100644
+index 0000000..07015ce
+--- /dev/null
++++ b/webhookd/notify.py
+@@ -0,0 +1,36 @@
++"""webhookd.notify — Slack notification transport."""
++
++import json
++import urllib.request
++import urllib.error
++
++from webhookd.config import setting
++
++
++def _default_transport(url, payload, headers):
++    data = json.dumps(payload).encode("utf-8")
++    req = urllib.request.Request(url, data=data, headers=headers, method="POST")
++    try:
++        with urllib.request.urlopen(req) as resp:
++            return resp.status
++    except urllib.error.HTTPError as e:
++        return e.code
++
++
++class Notifier:
++    def __init__(self, transport=None):
++        self.transport = transport or _default_transport
++
++    def send(self, message, channel=None):
++        url = setting("SLACK_WEBHOOK_URL")
++        bot_token = setting("SLACK_BOT_TOKEN")
++        default_channel = setting("SLACK_DEFAULT_CHANNEL")
++
++        payload_channel = channel if channel is not None else default_channel
++        payload = {"text": message, "channel": payload_channel}
++        headers = {
++            "Authorization": f"Bearer {bot_token}",
++            "Content-Type": "application/json",
++        }
++
++        return self.transport(url, payload, headers)
+\ No newline at end of file

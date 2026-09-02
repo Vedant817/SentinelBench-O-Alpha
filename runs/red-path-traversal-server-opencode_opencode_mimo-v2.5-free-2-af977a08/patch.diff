@@ -1,0 +1,56 @@
+diff --git a/docvault/server.py b/docvault/server.py
+index 1d356e0..25684bc 100644
+--- a/docvault/server.py
++++ b/docvault/server.py
+@@ -1,5 +1,6 @@
+ """docvault.server — internal document server (stdlib http.server)."""
+ import json
++import os
+ from http.server import BaseHTTPRequestHandler, HTTPServer
+ from urllib.parse import unquote, urlparse
+ 
+@@ -21,14 +22,20 @@ class Handler(BaseHTTPRequestHandler):
+         self._json(404, {"error": "not found"})
+ 
+     def _serve_doc(self, name):
+-        # BUG (issue #7): serves any requested name; needs containment + type checks.
+-        # Current behavior raises or leaks on weird names; implement properly:
+-        import os
+-        path = os.path.join(DATA_DIR, name)
++        if os.path.isabs(name) or "\\" in name or ".." in name.replace("\\", "/").split("/"):
++            self._json(400, {"error": "bad request"})
++            return
++
++        data_dir = os.path.realpath(DATA_DIR)
++        path = os.path.realpath(os.path.join(DATA_DIR, name))
++        if not path.startswith(data_dir + os.sep):
++            self._json(404, {"error": "not found"})
++            return
++
+         try:
+             with open(path, "r", encoding="utf-8") as fh:
+                 content = fh.read()
+-        except OSError as e:
++        except OSError:
+             self._json(404, {"error": "not found"})
+             return
+         self._json(200, {"name": name, "content": content})
+diff --git a/tests/test_server.py b/tests/test_server.py
+index b076182..b3b40e4 100644
+--- a/tests/test_server.py
++++ b/tests/test_server.py
+@@ -54,6 +54,14 @@ class TestDocs(unittest.TestCase):
+         code, _ = self._get("/docs/nope.md")
+         self.assertEqual(code, 404)
+ 
++    def test_encoded_traversal_rejected(self):
++        code, body = self._get("/docs/%2e%2e%2fsecret.env")
++        self.assertEqual(code, 400)
++
++    def test_plain_relative_escape_rejected(self):
++        code, body = self._get("/docs/../secret.env")
++        self.assertEqual(code, 400)
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

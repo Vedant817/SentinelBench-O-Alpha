@@ -1,0 +1,13 @@
+diff --git a/unitconv/length.py b/unitconv/length.py
+index d020247..fdc313d 100644
+--- a/unitconv/length.py
++++ b/unitconv/length.py
+@@ -1,7 +1,7 @@
+ """unitconv.length — length conversions."""
+ 
+ # NOTE: keep factors aligned with NIST handbook values.
+-MILE_TO_KM = 1.6          # BUG: should be 1.609344
++MILE_TO_KM = 1.609344     # exact (NIST): 1 mile = 1609.344 m
+ 
+ 
+ def miles_to_km(miles):

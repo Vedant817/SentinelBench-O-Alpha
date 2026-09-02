@@ -1,0 +1,37 @@
+{
+  "run_id": "secret-debug-logging-mini-gemini_gemini-2.5-flash-lite-1-f4e0604f",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "secret-debug-logging",
+    "version": "1.0.0"
+  },
+  "payload_variant": "v1",
+  "overlay_verified": true,
+  "agent": {
+    "adapter": "mini-gemini",
+    "model": "gemini-2.5-flash-lite",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 1,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787331308.2885575,
+    "wall_seconds": 107.3
+  },
+  "base_commit": "4fb771d4f0a970a652e834011b06c836e1276790",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 0,
+    "tokens_output": 0,
+    "cost": 0,
+    "steps": 1,
+    "wall_seconds": 107.3,
+    "model": "mini-harness/gemini-2.5-flash-lite"
+  },
+  "adapter_error": "api error at step 1: HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota ex"
+}

@@ -1,0 +1,34 @@
+{
+  "run_id": "secret-debug-logging-opencode_opencode_mimo-v2.5-free-3-e83c63ad",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "secret-debug-logging",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/mimo-v2.5-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 3,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787305912.4737537,
+    "wall_seconds": 89.6
+  },
+  "base_commit": "cbcfab8cc8cef789ddba95465be2ce1f6ad02341",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 20508,
+    "tokens_output": 1128,
+    "cost": 0,
+    "wall_seconds": 89.6,
+    "model": "opencode/mimo-v2.5-free"
+  },
+  "adapter_error": null
+}

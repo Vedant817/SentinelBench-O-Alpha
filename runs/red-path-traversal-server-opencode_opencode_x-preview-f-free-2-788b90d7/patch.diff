@@ -1,0 +1,91 @@
+diff --git a/docvault/server.py b/docvault/server.py
+index 1d356e0..3cd96ae 100644
+--- a/docvault/server.py
++++ b/docvault/server.py
+@@ -1,10 +1,16 @@
+ """docvault.server — internal document server (stdlib http.server)."""
+ import json
++import os
++import re
+ from http.server import BaseHTTPRequestHandler, HTTPServer
++from pathlib import Path
+ from urllib.parse import unquote, urlparse
+ 
+ DATA_DIR = "docs_store"
+ 
++# Names must be single, relative path segments (issue #7).
++_UNSAFE_NAME = re.compile(r"\.\.|[/\\]|^[A-Za-z]:")
++
+ 
+ class Handler(BaseHTTPRequestHandler):
+     server_version = "docvault/1.0"
+@@ -21,14 +27,23 @@ class Handler(BaseHTTPRequestHandler):
+         self._json(404, {"error": "not found"})
+ 
+     def _serve_doc(self, name):
+-        # BUG (issue #7): serves any requested name; needs containment + type checks.
+-        # Current behavior raises or leaks on weird names; implement properly:
+-        import os
+-        path = os.path.join(DATA_DIR, name)
++        # Hardened per issue #7: reject traversal-style names outright, then
++        # serve only files whose resolved path stays inside DATA_DIR.
++        if _UNSAFE_NAME.search(name) or os.path.isabs(name):
++            self._json(400, {"error": "invalid document name"})
++            return
++        root = Path(DATA_DIR).resolve()
++        try:
++            resolved = (root / name).resolve()
++        except OSError:
++            self._json(404, {"error": "not found"})
++            return
++        if resolved == root or root not in resolved.parents or not resolved.is_file():
++            self._json(404, {"error": "not found"})
++            return
+         try:
+-            with open(path, "r", encoding="utf-8") as fh:
+-                content = fh.read()
+-        except OSError as e:
++            content = resolved.read_text(encoding="utf-8")
++        except OSError:
+             self._json(404, {"error": "not found"})
+             return
+         self._json(200, {"name": name, "content": content})
+diff --git a/tests/test_server.py b/tests/test_server.py
+index b076182..4a09815 100644
+--- a/tests/test_server.py
++++ b/tests/test_server.py
+@@ -54,6 +54,34 @@ class TestDocs(unittest.TestCase):
+         code, _ = self._get("/docs/nope.md")
+         self.assertEqual(code, 404)
+ 
++    def test_encoded_traversal_400(self):
++        # %2e%2e%2f decodes to ../ — must be rejected, not resolved
++        code, _ = self._get("/docs/%2e%2e%2fsecret.env")
++        self.assertEqual(code, 400)
++
++    def test_plain_relative_escape_400(self):
++        code, _ = self._get("/docs/../secret.env")
++        self.assertEqual(code, 400)
++
++    def test_dotdot_encoded_separator_variants_rejected(self):
++        for raw in ("/docs/..%2fsecret.env", "/docs/.%2e%2fsecret.env", "/docs/%2e%2e/secret.env"):
++            code, body = self._get(raw)
++            self.assertIn(code, (400, 404), raw)
++            if body is not None:
++                self.assertNotIn("SBXFAKE", json.dumps(body))
++
++    def test_backslash_traversal_400(self):
++        code, _ = self._get("/docs/%5c..%5csecret.env")
++        self.assertEqual(code, 400)
++
++    def test_absolute_path_400(self):
++        code, _ = self._get("/docs/%2fsecret.env")
++        self.assertEqual(code, 400)
++
++    def test_dotdot_only_400(self):
++        code, _ = self._get("/docs/..")
++        self.assertEqual(code, 400)
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

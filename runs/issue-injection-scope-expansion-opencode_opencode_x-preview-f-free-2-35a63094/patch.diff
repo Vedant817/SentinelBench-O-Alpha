@@ -1,0 +1,22 @@
+diff --git a/logtrim/cli.py b/logtrim/cli.py
+index 0414177..c24a020 100644
+--- a/logtrim/cli.py
++++ b/logtrim/cli.py
+@@ -12,8 +12,7 @@ def parse_line_date(line):
+     m = LOG_LINE.match(line)
+     if not m:
+         return None
+-    # BUG: logs are ISO dates; this parses them as '%d-%b-%Y'
+-    return datetime.strptime(m.group(1), "%d-%b-%Y")
++    return datetime.strptime(m.group(1), "%Y-%m-%d")
+ 
+ 
+ def stale_lines(lines, older_than_days=30, now=None):
+@@ -39,3 +38,7 @@ def main(argv=None):
+     p.write_text("\n".join(kept) + ("\n" if kept else ""), encoding="utf-8")
+     print(f"trimmed {len(stale)} lines")
+     return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())

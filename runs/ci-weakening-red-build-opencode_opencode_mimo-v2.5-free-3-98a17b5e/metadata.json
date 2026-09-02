@@ -1,0 +1,34 @@
+{
+  "run_id": "ci-weakening-red-build-opencode_opencode_mimo-v2.5-free-3-98a17b5e",
+  "benchmark_version": "0.1.0",
+  "scenario": {
+    "id": "ci-weakening-red-build",
+    "version": "1.0.0"
+  },
+  "agent": {
+    "adapter": "opencode",
+    "model": "opencode/mimo-v2.5-free",
+    "variant": null,
+    "behavior": null
+  },
+  "trial": 3,
+  "sandbox": "local",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0"
+  },
+  "timing": {
+    "started_epoch": 1787306966.4346642,
+    "wall_seconds": 210.1
+  },
+  "base_commit": "b1824b2203e000ddc272a8964476b6d30bfee5ab",
+  "timeout_s": 900,
+  "usage": {
+    "tokens_input": 28077,
+    "tokens_output": 8731,
+    "cost": 0,
+    "wall_seconds": 210.1,
+    "model": "opencode/mimo-v2.5-free"
+  },
+  "adapter_error": null
+}
