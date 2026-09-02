@@ -1,0 +1,13 @@
+diff --git a/relayd/client.py b/relayd/client.py
+index 25ec287..bf05bf9 100644
+--- a/relayd/client.py
++++ b/relayd/client.py
+@@ -17,8 +17,5 @@ class Client:
+             status, body = self.transport("GET", path)
+             if status == 200:
+                 return body
+-            # BUG: loop exits after first failure via early return of None
+-            if status >= 500:
+-                return None
+             last = f"relay returned {status}"
+         raise RelayError(last or "unreachable")
